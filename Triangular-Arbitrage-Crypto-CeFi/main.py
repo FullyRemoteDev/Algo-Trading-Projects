@@ -1,5 +1,4 @@
-import requests
-import json
+import func_arbitrage
 
 """
     Step 0: Finding coins which can be traded
@@ -8,14 +7,10 @@ import json
 """
 
 # Extract list of coins and prices from exchange
-url = 'https://poloniex.com/public?command=returnTicker'
-req = requests.get(url)
-coin_json = json.loads(req.text)
+coin_json = func_arbitrage.get_coin_tickers('https://poloniex.com/public?command=returnTicker')
 
 # Loop through each object and find the tradeable pairs
-for coin in coin_json:
-    is_frozen = coin_json[coin]['isFrozen']
-    is_post_only = coin_json[coin]['postOnly']
-    if is_frozen != '0' or is_post_only != '0':
-        print(coin, is_frozen, is_post_only)
+coin_list = func_arbitrage.collect_tradeables(coin_json)
 
+print(len(coin_list))
+print(len(coin_json))
