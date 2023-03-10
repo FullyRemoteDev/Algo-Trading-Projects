@@ -89,3 +89,65 @@ def structure_triangular_pairs(coin_list):
     return triangular_pairs_list
 
 
+# Structure Prices
+def get_price_for_t_pair(t_pair, prices_json):
+
+    # Extract Pair Info
+    pair_a = t_pair["pair_a"]
+    pair_b = t_pair["pair_b"]
+    pair_c = t_pair["pair_c"]
+
+    # Extract Price Information for Given Pairs
+    pair_a_ask = float(prices_json[pair_a]["lowestAsk"])
+    pair_a_bid = float(prices_json[pair_a]["highestBid"])
+    pair_b_ask = float(prices_json[pair_b]["lowestAsk"])
+    pair_b_bid = float(prices_json[pair_b]["highestBid"])
+    pair_c_ask = float(prices_json[pair_c]["lowestAsk"])
+    pair_c_bid = float(prices_json[pair_c]["highestBid"])
+
+    # Output Dictionary
+    return {
+        "pair_a_ask": pair_a_ask,
+        "pair_a_bid": pair_a_bid,
+        "pair_b_ask": pair_b_ask,
+        "pair_b_bid": pair_b_bid,
+        "pair_c_ask": pair_c_ask,
+        "pair_c_bid": pair_c_bid,
+    }
+
+
+# Calculate Surface Rate Arbitrage Opportunity
+def calc_triangular_arb_surface_rate(t_pair, prices_dict):
+    # Set Variables
+    starting_amount = 1
+    min_surface_rate = 0
+    surface_dict = {}
+    contract_2 = ''
+    contract_3 = ''
+    direction_trade_1 = ''
+    direction_trade_2 = ''
+    direction_trade_3 = ''
+    acquired_coin_t2 = 0
+    acquired_coin_t3 = 0
+    calculated = 0
+
+    # Extract Pair Variables
+    a_base = t_pair["a_base"]
+    a_quote = t_pair["a_quote"]
+    b_base = t_pair["b_base"]
+    b_quote = t_pair["b_quote"]
+    c_base = t_pair["c_base"]
+    c_quote = t_pair["c_quote"]
+    pair_a = t_pair["pair_a"]
+    pair_b = t_pair["pair_b"]
+    pair_c = t_pair["pair_c"]
+
+    # Extract Price Information
+    a_ask = prices_dict["pair_a_ask"]
+    a_bid = prices_dict["pair_a_bid"]
+    b_ask = prices_dict["pair_b_ask"]
+    b_bid = prices_dict["pair_b_bid"]
+    c_ask = prices_dict["pair_c_ask"]
+    c_bid = prices_dict["pair_c_bid"]
+
+
